@@ -1,6 +1,6 @@
-import {DailyCaloriesForm} from 'Calculate';
+// import {DailyCaloriesForm} from 'Calculate';
 import { useEffect } from 'react';
-import { useDispatch} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import { fetchContacts } from 'redux/operations';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
