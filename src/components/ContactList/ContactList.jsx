@@ -1,36 +1,80 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from 'redux/operations';
+import { deleteProduct } from 'redux/operations';
 import css from '../ContactList/ContactList.module.css';
 
 export const ContactList = () => {
   const filter = useSelector(state => state.filter.filter);
   const contactsArr = useSelector(state => state.contacts.contacts.items);
+  const productsArr = useSelector(state => state.products.products.items);
+  // const filteredProductsArr = productsArr.filter(product =>
+  //   product.name.toLowerCase().includes(filter.toLowerCase())
+  // );
   const filteredContactsArr = contactsArr.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 
   const dispatch = useDispatch();
-  const removeContact = contactId => {
-    dispatch(deleteContact(contactId));
+  const removeContact = productId => {
+    dispatch(deleteProduct(productId));
   };
 
   return (
-    <>
-      <ul>
-        {filteredContactsArr.map(contact => (
-          <li key={contact.name}>
-            {`${contact.name} : ${contact.phone}`}
-            <button
+    <table className={css.table}>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>NAME</th>
+          <th>DESCRIPTION</th>
+          <th>PRICE</th>
+          <th>RATING</th>
+          <th>STOCK</th>
+          <th>CATEGORY</th>
+          <th>IMAGE</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {productsArr.map((product) => {
+          return (
+            <tr key={product.id}>
+             <td >{product.id}</td>
+            <td>{product.title}</td>
+            <td>{product.description}</td>
+             <td>{product.price}</td>
+             <td >{product.rating}</td>
+            <td>{product.stock}</td>
+            <td>{product.category}</td>
+             <td>{product.images[0]}</td>
+             <td> <button
               className={css.buttonDel}
               type="button"
               name="delete"
-              onClick={() => removeContact(contact.id)}
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
-    </>
+                      onClick={() => removeContact(product.id)}
+             >
+               Delete
+            </button> </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
   );
-};
+      }
+
+  
+//     <tr key={product.id}>
+// <td >{product.id}</td>
+// <td>{product.title}</td>
+// <td>{product.description}</td>
+// <td>{product.price}</td>
+// </tr>
+            
+        
+//          )
+   
+           
+         
+
+
+
+ 

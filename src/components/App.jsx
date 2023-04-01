@@ -1,7 +1,7 @@
 // import {DailyCaloriesForm} from 'Calculate';
 import { useEffect } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
-import { fetchContacts } from 'redux/operations';
+import { fetchContacts, fetchProducts } from 'redux/operations';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
@@ -12,7 +12,8 @@ export const App = () => {
   const loader = useSelector(state => state.contacts.contacts.isLoading);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    // dispatch(fetchContacts());
+    dispatch(fetchProducts());
   }, [dispatch]);
 
   return (
