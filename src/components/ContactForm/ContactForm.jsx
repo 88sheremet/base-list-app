@@ -2,58 +2,101 @@ import css from '../ContactForm/ContactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/operations';
 import {  useFormik } from 'formik';
-import { object, string, number, date, InferType } from 'yup';
+import * as yup from 'yup';
+// import { object, string, number, date, InferType } from 'yup';
 
 export const ContactForm = () => {
-  const contactsObj = useSelector(state => state.contacts.contacts.items);
-  const dispatch = useDispatch();
+  // const contactsObj = useSelector(state => state.contacts.contacts.items);
+  // const dispatch = useDispatch();
 
-  const onHandleSubmit = e => {
-    e.preventDefault();
-    const { name, phone } = e.target.elements;
+  // const onHandleSubmit = e => {
+  //   e.preventDefault();
+  //   const { name, phone } = e.target.elements;
 
-    if (
-      contactsObj.some(
-        user => user.name.toLowerCase() === name.value.toLowerCase()
-      )
-    ) {
-      return alert(`${name.value} is already in contacts`);
+  //   if (
+  //     contactsObj.some(
+  //       user => user.name.toLowerCase() === name.value.toLowerCase()
+  //     )
+  //   ) {
+  //     return alert(`${name.value} is already in contacts`);
+  //   }
+
+  //   const contact = {
+  //     name: name.value,
+  //     phone: phone.value,
+  //   };
+
+  //   dispatch(addContact(contact));
+  //   e.target.reset();
+  // };
+
+  // let userSchema = object({
+  //   name: string().required(),
+  //   age: number().required().positive().integer(),
+  //   email: string().email(),
+  //   website: string().url().nullable(),
+  //   createdOn: date().default(() => new Date()),
+  // });
+  
+
+  // let formik = useFormik({
+  //   initialValues: {
+  //     Name: '',
+  //     Author: '',
+  //     Rating: '',
+  //     YearEdition: '',
+  //   },
+  //   onSubmit: values => {
+  //     alert(JSON.stringify(values, null, 2));
+  //   },
+  // });
+  let formik=useFormik({
+    initialValues:{
+      name:'',
+      author:'',
+      year:'',
+      rating:''
+    },validationSchema:yup.object({
+      name:yup.string().required('*required'),
+      author:yup.string().required('*required'),
+      year:yup.number().required('*required'),
+      rating:yup.number().required('*required')
+    }),onSubmit(values){
+  
+      handleSubmit(values)
     }
-
-    const contact = {
-      name: name.value,
-      phone: phone.value,
-    };
-
-    dispatch(addContact(contact));
-    e.target.reset();
-  };
-
-  let userSchema = object({
-    name: string().required(),
-    age: number().required().positive().integer(),
-    email: string().email(),
-    website: string().url().nullable(),
-    createdOn: date().default(() => new Date()),
-  });
-  // const user = await userSchema.validate(await fetchUser());
-  // type User = InferType<typeof userSchema>;  
-
-  const formik = useFormik({
-    initialValues: {
-      Name: '',
-      Author: '',
-      Rating: '',
-      YearEdition: '',
-    },
-    onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
+  })
+  let handleSubmit=async(data)=>{
+ console.log(data)
+    // const id = toast.loading('Please wait...')
+    //   let res = await axios.post(`${env.REACT_APP_API_URL}register`,data)
+    //   if(res.data.statuscode ===200){
+    //     toast.update(id,{render:'Check you mail for verification link',type:'success',isLoading:false,autoClose:true,closeButton:true})
+        
+    //   }else{
+    //     toast.update(id,{render:res.data.message,type:'error',isLoading:false,autoClose:true,closeButton:true})
+    //     }
+      
+    }
 
   return (
     <>
-    <form onSubmit={onHandleSubmit} className={css.form}>
+    <div >
+    
+    <form  onSubmit={(e)=>{e.preventDefault(); formik.handleSubmit()}}>
+     <input type="text" name='name' onChange={formik.handleChange} value={formik.values.name} onBlur={formik.handleBlur} placeholder="Name" required/>
+     {formik.touched.name && formik.errors.name ?<div style={{color:"red" }}>{formik.errors.name}</div>:null}
+     <input type="text" name='author' onChange={formik.handleChange} value={formik.values.author} onBlur={formik.handleBlur} placeholder="Author" required/>
+     {formik.touched.author && formik.errors.author ?<div style={{color:"red"}}>{formik.errors.author}</div>:null}
+     <input type="number" name='year' onChange={formik.handleChange} value={formik.values.year} onBlur={formik.handleBlur} placeholder="Year" required/>
+     {formik.touched.year && formik.errors.year ?<div style={{color:"red"}}>{formik.errors.year}</div>:null}
+     <input type="number" name='rating' onChange={formik.handleChange} value={formik.values.rating} onBlur={formik.handleBlur} placeholder="Rating" required/>
+     {formik.touched.rating && formik.errors.rating ?<div style={{color:"red"}}>{formik.errors.rating}</div>:null}
+     <button type='submit'>Add Product</button>
+     
+   </form>
+ </div>
+    {/* <form onSubmit={onHandleSubmit} className={css.form}>
       <label>
         Name:
         <input
@@ -118,7 +161,7 @@ export const ContactForm = () => {
        />
  
        <button type="submit">Submit</button>
-     </form>
+     </form> */}
 </>
   );
 };
