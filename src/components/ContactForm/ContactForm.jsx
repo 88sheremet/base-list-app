@@ -1,13 +1,14 @@
 import css from '../ContactForm/ContactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/operations';
+import { addProduct } from 'redux/operations';
 import {  useFormik } from 'formik';
 import * as yup from 'yup';
+import { nanoid } from 'nanoid';
 // import { object, string, number, date, InferType } from 'yup';
 
 export const ContactForm = () => {
   // const contactsObj = useSelector(state => state.contacts.contacts.items);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // const onHandleSubmit = e => {
   //   e.preventDefault();
@@ -30,52 +31,30 @@ export const ContactForm = () => {
   //   e.target.reset();
   // };
 
-  // let userSchema = object({
-  //   name: string().required(),
-  //   age: number().required().positive().integer(),
-  //   email: string().email(),
-  //   website: string().url().nullable(),
-  //   createdOn: date().default(() => new Date()),
-  // });
-  
 
-  // let formik = useFormik({
-  //   initialValues: {
-  //     Name: '',
-  //     Author: '',
-  //     Rating: '',
-  //     YearEdition: '',
-  //   },
-  //   onSubmit: values => {
-  //     alert(JSON.stringify(values, null, 2));
-  //   },
-  // });
   let formik=useFormik({
     initialValues:{
-      name:'',
-      author:'',
-      year:'',
-      rating:''
+      rating:'',
+      title: '',
+      images: '-',
+      description: '',
+      price: '',
+      id:nanoid(),
     },validationSchema:yup.object({
-      name:yup.string().required('*required'),
-      author:yup.string().required('*required'),
-      year:yup.number().required('*required'),
-      rating:yup.number().required('*required')
+      title:yup.string().max(25, 'Must be 25 characters or less').required('*required'),
+      description:yup.string().max(300, 'Must be 300 characters or less').required('*required'),
+      price:yup.number().min(0, 'Must be positive').required('*required'),
+      rating:yup.number().min(0, 'Must be from 0 to 5')
+      .max(5, 'Must be from 0 to 5').required('*required')
     }),onSubmit(values){
-  
+      console.log(values)
       handleSubmit(values)
     }
   })
   let handleSubmit=async(data)=>{
  console.log(data)
-    // const id = toast.loading('Please wait...')
-    //   let res = await axios.post(`${env.REACT_APP_API_URL}register`,data)
-    //   if(res.data.statuscode ===200){
-    //     toast.update(id,{render:'Check you mail for verification link',type:'success',isLoading:false,autoClose:true,closeButton:true})
-        
-    //   }else{
-    //     toast.update(id,{render:res.data.message,type:'error',isLoading:false,autoClose:true,closeButton:true})
-    //     }
+ dispatch(addProduct(data));
+   
       
     }
 
@@ -84,12 +63,12 @@ export const ContactForm = () => {
     <div >
     
     <form  onSubmit={(e)=>{e.preventDefault(); formik.handleSubmit()}}>
-     <input type="text" name='name' onChange={formik.handleChange} value={formik.values.name} onBlur={formik.handleBlur} placeholder="Name" required/>
-     {formik.touched.name && formik.errors.name ?<div style={{color:"red" }}>{formik.errors.name}</div>:null}
-     <input type="text" name='author' onChange={formik.handleChange} value={formik.values.author} onBlur={formik.handleBlur} placeholder="Author" required/>
-     {formik.touched.author && formik.errors.author ?<div style={{color:"red"}}>{formik.errors.author}</div>:null}
-     <input type="number" name='year' onChange={formik.handleChange} value={formik.values.year} onBlur={formik.handleBlur} placeholder="Year" required/>
-     {formik.touched.year && formik.errors.year ?<div style={{color:"red"}}>{formik.errors.year}</div>:null}
+     <input type="text" name='title' onChange={formik.handleChange} value={formik.values.title} onBlur={formik.handleBlur} placeholder="Name" required/>
+     {formik.touched.title && formik.errors.title ?<div style={{color:"red" }}>{formik.errors.title}</div>:null}
+     <input type="text" name='description' onChange={formik.handleChange} value={formik.values.description} onBlur={formik.handleBlur} placeholder="Author" required/>
+     {formik.touched.description && formik.errors.description ?<div style={{color:"red"}}>{formik.errors.description}</div>:null}
+     <input type="number" name='price' onChange={formik.handleChange} value={formik.values.price} onBlur={formik.handleBlur} placeholder="Year" required/>
+     {formik.touched.price && formik.errors.price ?<div style={{color:"red"}}>{formik.errors.price}</div>:null}
      <input type="number" name='rating' onChange={formik.handleChange} value={formik.values.rating} onBlur={formik.handleBlur} placeholder="Rating" required/>
      {formik.touched.rating && formik.errors.rating ?<div style={{color:"red"}}>{formik.errors.rating}</div>:null}
      <button type='submit'>Add Product</button>

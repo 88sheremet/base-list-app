@@ -6,12 +6,12 @@ export const ContactList = () => {
   const filter = useSelector(state => state.filter.filter);
   const contactsArr = useSelector(state => state.contacts.contacts.items);
   const productsArr = useSelector(state => state.products.products.items);
-  // const filteredProductsArr = productsArr.filter(product =>
-  //   product.name.toLowerCase().includes(filter.toLowerCase())
-  // );
-  const filteredContactsArr = contactsArr.filter(contact =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
+  const filteredProductsArr = productsArr.filter(product =>
+    product.title.toLowerCase().includes(filter.toLowerCase())
   );
+  // const filteredContactsArr = contactsArr.filter(contact =>
+  //   contact.name.toLowerCase().includes(filter.toLowerCase())
+  // );
 
   const dispatch = useDispatch();
   const removeContact = productId => {
@@ -34,7 +34,8 @@ export const ContactList = () => {
       </thead>
 
       <tbody>
-        {productsArr.map((product) => {
+        {filteredProductsArr.map((product) => {
+        
           return (
             <tr key={product.id}>
              <td >{product.id}</td>
@@ -44,7 +45,7 @@ export const ContactList = () => {
              <td >{product.rating}</td>
             <td>{product.stock}</td>
             <td>{product.category}</td>
-             <td>{product.images[0]}</td>
+             <td><img src={`${product.images[0]}`} alt={product.title} width="100px" height="100px" /></td>
              <td> <button
               className={css.buttonDel}
               type="button"
@@ -61,16 +62,6 @@ export const ContactList = () => {
   );
       }
 
-  
-//     <tr key={product.id}>
-// <td >{product.id}</td>
-// <td>{product.title}</td>
-// <td>{product.description}</td>
-// <td>{product.price}</td>
-// </tr>
-            
-        
-//          )
    
            
          
