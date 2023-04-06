@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {  fetchProducts, deleteProduct, addProduct } from './operations';
+import { useSelector } from 'react-redux';
 
 const initialState = {
   contacts: {
@@ -15,7 +16,7 @@ const initialState = {
 };
 
 const contactSlice = createSlice({
-  name: 'contacts',
+  name: 'products',
   initialState,
   extraReducers: builder => {
     builder
@@ -53,6 +54,7 @@ const contactSlice = createSlice({
         state.products.isLoading = false;
         state.products.error = null;
         state.products.items.push(action.payload);
+       
       })
       .addCase(addProduct.rejected, (state, action) => {
         state.products.isLoading = false;
@@ -61,7 +63,7 @@ const contactSlice = createSlice({
   },
 });
 
-export const contactsReducer = contactSlice.reducer;
+// export const contactsReducer = contactSlice.reducer;
 export const productsReducer = contactSlice.reducer;
 
 export const { addContactAction, deleteProductAction } = contactSlice.actions;

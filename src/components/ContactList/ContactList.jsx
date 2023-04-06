@@ -4,14 +4,11 @@ import css from '../ContactList/ContactList.module.css';
 
 export const ContactList = () => {
   const filter = useSelector(state => state.filter.filter);
-  const contactsArr = useSelector(state => state.contacts.contacts.items);
   const productsArr = useSelector(state => state.products.products.items);
   const filteredProductsArr = productsArr.filter(product =>
     product.title.toLowerCase().includes(filter.toLowerCase())
   );
-  // const filteredContactsArr = contactsArr.filter(contact =>
-  //   contact.name.toLowerCase().includes(filter.toLowerCase())
-  // );
+  
 
   const dispatch = useDispatch();
   const removeContact = productId => {

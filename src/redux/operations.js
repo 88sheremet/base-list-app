@@ -11,8 +11,18 @@ const privateAPI = axios.create({
   },
 });
 
+const productInterceptor = config => {
+  config.headers['Authorization'] = localStorage.getItem('token');
+  return config;
+};
+
+privateAPI.interceptors.request.use(productInterceptor);
+
 export const ContactsAPI = {
- 
+  async getProducts(signal) {
+    const { data } = await privateAPI.get(`/products`, signal);
+    return await data;
+  },
   async addContact(contactData) {
     const { data } = await privateAPI.post(`/products/add`, {
       ...contactData, 
@@ -24,11 +34,13 @@ export const ContactsAPI = {
 };
 
 export const fetchProducts = createAsyncThunk(
-  'contacts/fetchAll',
+  'products/fetchAll',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get('/products');
-      return response.data.products;
+      const response =  await ContactsAPI.getProducts();
+      
+      console.log(response.products)
+      return response.products;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

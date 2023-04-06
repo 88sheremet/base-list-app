@@ -62,85 +62,20 @@ export const ContactForm = () => {
     <>
     <div >
     
-    <form  onSubmit={(e)=>{e.preventDefault(); formik.handleSubmit()}}>
-     <input type="text" name='title' onChange={formik.handleChange} value={formik.values.title} onBlur={formik.handleBlur} placeholder="Name" required/>
+    <form className={css.form} onSubmit={(e)=>{e.preventDefault(); formik.handleSubmit()}}>
+     <input    className={css.input} type="text" name='title' onChange={formik.handleChange} value={formik.values.title} onBlur={formik.handleBlur} placeholder="Name" required/>
      {formik.touched.title && formik.errors.title ?<div style={{color:"red" }}>{formik.errors.title}</div>:null}
-     <input type="text" name='description' onChange={formik.handleChange} value={formik.values.description} onBlur={formik.handleBlur} placeholder="Author" required/>
+     <input    className={css.input} type="text" name='description' onChange={formik.handleChange} value={formik.values.description} onBlur={formik.handleBlur} placeholder="Author" required/>
      {formik.touched.description && formik.errors.description ?<div style={{color:"red"}}>{formik.errors.description}</div>:null}
-     <input type="number" name='price' onChange={formik.handleChange} value={formik.values.price} onBlur={formik.handleBlur} placeholder="Year" required/>
+     <input    className={css.input} type="number" name='price' onChange={formik.handleChange} value={formik.values.price} onBlur={formik.handleBlur} placeholder="Year" required/>
      {formik.touched.price && formik.errors.price ?<div style={{color:"red"}}>{formik.errors.price}</div>:null}
-     <input type="number" name='rating' onChange={formik.handleChange} value={formik.values.rating} onBlur={formik.handleBlur} placeholder="Rating" required/>
+     <input    className={css.input}  type="number" name='rating' onChange={formik.handleChange} value={formik.values.rating} onBlur={formik.handleBlur} placeholder="Rating" required/>
      {formik.touched.rating && formik.errors.rating ?<div style={{color:"red"}}>{formik.errors.rating}</div>:null}
-     <button type='submit'>Add Product</button>
+     <button className={css.buttonAdd} type='submit'>Add Product</button>
      
    </form>
  </div>
-    {/* <form onSubmit={onHandleSubmit} className={css.form}>
-      <label>
-        Name:
-        <input
-          className={css.input}
-          type="text"
-          name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-        />
-      </label>
-      <label>
-        Number:
-        <input
-          type="tel"
-          name="phone"
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required
-        />
-      </label>
-
-      <button className={css.buttonAdd} type="submit">
-        add contact
-      </button>
-    </form>
-
-    <form onSubmit={formik.handleSubmit}>
-       <label htmlFor="Name"> Name</label>
-       <input
-         id="Name"
-         name="Name"
-         type="text"
-         onChange={formik.handleChange}
-         value={formik.values.Name}
-       />
-        <label htmlFor="firstName">Author</label>
-       <input
-         id="Author"
-         name="Author"
-         type="text"
-         onChange={formik.handleChange}
-         value={formik.values.Author}
-       />
- 
-       <label htmlFor="Rating">Rating</label>
-       <input
-         id="Rating"
-         name="Rating"
-         type="number"
-         onChange={formik.handleChange}
-         value={formik.values.Rating}
-       />
- 
-       <label htmlFor="YearEdition">Year Edition</label>
-       <input
-         id="YearEdition"
-         name="YearEdition"
-         type="number"
-         onChange={formik.handleChange}
-         value={formik.values.YearEdition}
-       />
- 
-       <button type="submit">Submit</button>
-     </form> */}
+   
 </>
   );
 };
